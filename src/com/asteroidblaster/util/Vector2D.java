@@ -1,4 +1,4 @@
-package asteroidblaster.util;
+package com.asteroidblaster.util;
 
 public class Vector2D {
 
