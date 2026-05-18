@@ -1,6 +1,7 @@
 package com.asteroidblaster.model;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -42,4 +43,28 @@ public class ParticleSystem {
         }
     }
 
+    public void update() {
+        particles.removeIf(particle -> {
+            particle.x += particle.velocityX;
+            particle.y += particle.velocityY;
+
+            particle.velocityX *= 0.93;
+            particle.velocityY *= 0.93;
+
+            return --particle.life <= 0;
+        });
+    }
+
+    public void draw(Graphics2D g2) {
+        for (Particle particle : particles) {
+            float alpha = (float) particle.life / particle.maxLife;
+
+            Color c = new Color(particle.color.getRed() / 255f,
+                particle.color.getGreen() / 255f,
+                particle.color.getBlue() / 255f, alpha * alpha);
+            g2.setColor(c);
+            int s = (int) (particle.size * alpha + 1);
+            g2.fillOval((int) particle.x - s / 2, (int) particle.y - s / 2, s, s);
+        }
+    }
 }
