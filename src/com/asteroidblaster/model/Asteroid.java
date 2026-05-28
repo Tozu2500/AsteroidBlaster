@@ -1,5 +1,6 @@
 package com.asteroidblaster.model;
 
+import com.asteroidblaster.util.Constants;
 import java.util.Random;
 
 public class Asteroid {
@@ -39,5 +40,21 @@ public class Asteroid {
         }
     }
 
-    
+    public static Asteroid spawnRandom(int screenW, int screenH) {
+        // Spawn on the edge of screen
+        double x, y;
+
+        if (random.nextBoolean()) {
+            x = random.nextBoolean() ? -Constants.ASTEROID_SPAWN_MARGIN : screenW + Constants.ASTEROID_SPAWN_MARGIN;
+            y = random.nextDouble() * screenH;
+        } else {
+            x = random.nextDouble() * screenW;
+            y = random.nextBoolean() ? -Constants.ASTEROID_SPAWN_MARGIN : screenH + Constants.ASTEROID_SPAWN_MARGIN;
+        }
+
+        double angle = random.nextDouble() * Math.PI * 2;
+        double speed = Constants.ASTEROID_LARGE_SPEED * (0.8 + random.nextDouble() * 0.4);
+        
+        return new Asteroid(x, y, Math.cos(angle) * speed, Math.sin(angle) * speed, Size.LARGE);
+    }
 }
