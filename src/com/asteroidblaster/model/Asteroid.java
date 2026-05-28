@@ -75,4 +75,38 @@ public class Asteroid {
             y -= screenH + wrapMargin * 2;
         }
     }
+
+    // Spawn two smaller child asteroids when this one is destroyed
+    public Asteroid[] split() {
+        if (size == Size.SMALL) return new Asteroid[0];
+
+        Size childSize = (size == Size.LARGE) ? Size.MEDIUM : Size.SMALL;
+        double speed = (childSize == Size.MEDIUM) ? Constants.ASTEROID_MEDIUM_SPEED : Constants.ASTEROID_SMALL_SPEED;
+
+        Asteroid[] children = new Asteroid[2];
+        for (int i = 0; i < 2; i++) {
+            double angle = Math.atan2(velocityY, velocityX) + Math.toRadians(60 - i * 120 + random.nextInt(40) - 20);
+            children[i] = new Asteroid(x, y, Math.cos(angle) * speed, Math.sin(angle) * speed, childSize);
+        }
+
+        return children;
+    }
+
+    public int scoreValue() {
+        return switch (size) {
+            case LARGE -> Constants.SCORE_LARGE;
+            case MEDIUM -> Constants.SCORE_MEDIUM;
+            case SMALL -> Constants.SCORE_SMALL;
+        };
+    }
+
+    public double radius() {
+        return switch (size) {
+            case LARGE -> Constants.ASTEROID_LARGE_RADIUS;
+            case MEDIUM -> Constants.ASTEROID_MEDIUM_RADIUS;
+            case SMALL -> Constants.ASTEROID_SMALL_RADIUS;
+        };
+    }
+
+    
 }
