@@ -57,4 +57,22 @@ public class Asteroid {
         
         return new Asteroid(x, y, Math.cos(angle) * speed, Math.sin(angle) * speed, Size.LARGE);
     }
+
+    public void update(int screenW, int screenH) {
+        x += velocityX;
+        y += velocityY;
+        rotation += rotationSpeed;
+
+        // Wrap
+        double wrapMargin = radius() + 10;
+        if (x < -wrapMargin) {
+            x += screenW + wrapMargin * 2;
+        } else if (x > screenW + wrapMargin) {
+            x -= screenW + wrapMargin * 2;
+        } else if (y < -wrapMargin) {
+            y += screenH + wrapMargin * 2;
+        } else if (y > screenH + wrapMargin) {
+            y -= screenH + wrapMargin * 2;
+        }
+    }
 }
