@@ -1,6 +1,7 @@
 package com.asteroidblaster.model;
 
 import com.asteroidblaster.util.Constants;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Random;
@@ -132,6 +133,15 @@ public class Asteroid {
         g2.fillPolygon(polygonX, polygonY, polygonX.length);
 
         // Glow the outline
+        g2.setColor(new Color(strokeColor.getRed(), strokeColor.getGreen(), strokeColor.getBlue(), 50));
+        g2.setStroke(new BasicStroke(5f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        g2.drawPolygon(polygonX, polygonY, polygonX.length);
+
+        // Main outline
+        g2.setColor(strokeColor);
+        g2.setStroke(new BasicStroke(1.5f));
+        g2.drawPolygon(polygonX, polygonY, polygonX.length);
         
+        g2.setTransform(savedTransform);
     }
 }
