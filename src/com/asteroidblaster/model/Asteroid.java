@@ -1,6 +1,8 @@
 package com.asteroidblaster.model;
 
 import com.asteroidblaster.util.Constants;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.util.Random;
 
 public class Asteroid {
@@ -108,5 +110,28 @@ public class Asteroid {
         };
     }
 
-    
+    public void draw(Graphics2D g2) {
+        var savedTransform = g2.getTransform();
+        g2.translate(x, y);
+        g2.rotate(Math.toRadians(rotation));
+
+        Color fillColor = switch (size) {
+            case LARGE -> new Color(30, 40, 55);
+            case MEDIUM -> new Color(25, 35, 48);
+            case SMALL -> new Color(20, 30, 42);
+        };
+
+        Color strokeColor = switch (size) {
+            case LARGE -> new Color(120, 180, 255);
+            case MEDIUM -> new Color(150, 200, 255);
+            case SMALL -> new Color(180, 220, 255);
+        };
+
+        // Filling
+        g2.setColor(fillColor);
+        g2.fillPolygon(polygonX, polygonY, polygonX.length);
+
+        // Glow the outline
+        
+    }
 }
